@@ -25,8 +25,13 @@ app.get("/check", (req, res)=>{
 app.get("/landingPage",(req,res)=>{
     res.render("landingPage")
 })
+app.get("/registerStudent",(req,res)=>{
+    res.render("addStudent")
+})
 
-
+app.get("/showAllStudent",(req,res)=>{
+    res.render("showStudents")
+})
 
 const server = app.listen(port, ()=>{
     console.log("server is listening on port", port)

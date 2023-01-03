@@ -15,27 +15,6 @@ const authFunction =  async (req, res) =>{
     
 }
 
-const verifyLogin= async (req, res) =>{
-    try {
-        const password = req.body.password;
-        const username = req.body.userEmail;
-        console.log("u are at auth, and ur name is: "+username)
-        let result = await teacher_model.find({name:username})
-        console.log(result)
-        let verified = await cryptService.verify(password, result[0].password)
-        console.log(verified)
-        if(!verified)
-        throw ("Wrong password")
-        else   
-        {
-                
-                res.render("showStudents",{uname:username})
-            }
-    }catch(error){
-        res.render("landingPage", {error: error})
-    }
-}
-
 const fetchAllResult =async (req,res,next) =>{
     try{
         let results = await student_model.find();
@@ -49,6 +28,27 @@ const fetchAllResult =async (req,res,next) =>{
         res.status(400).send(error);
     }
 }
+const verifyLogin= async (req, res) =>{
+    try {
+        const password = req.body.password;
+        const username = req.body.userEmail;
+        console.log("u are at auth, and ur name is: "+username)
+        let result = await teacher_model.find({name:username})
+        console.log(result)
+        let verified = await cryptService.verify(password, result[0].password)
+        console.log(verified)
+        if(!verified)
+        throw ("Wrong password")
+        else   
+        {
+                let results = await student_model.find();
+                res.render("showStudents",{uname:username, resultArray:results})
+            }
+    }catch(error){
+        res.render("landingPage", {error: error})
+    }
+}
+
 const updateResult = async(req,res,next) =>{
     const {updatedName, updatedDob, roll, updatedMarks} = req.body;
     let updationStatus = await student_model.findOneAndUpdate({roll:roll},{
@@ -92,11 +92,11 @@ const addStudent =  async (req, res) =>{
         throw("Insufficient arguments")
         const studentData = student_model.create({name:name, roll:roll, marks:marks, dob:dob})
         if(studentData)
-            res.status(200).send("Succesfully inserted data")
+            res.render("addStudent",{success:"Sucessfully added the student"});
         else
             throw("Something went wrong.")
     }catch(error){
-        res.status(400).send(error);
+        res.render("addStudent",{error:error});
         }
         
     }

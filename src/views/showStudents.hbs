@@ -50,7 +50,7 @@
   </div>
     </nav>
     <div class="p-3 mt-5 w-100">
-        <form class="mt-5" action="/addStudent" method="post">
+        <form class="mt-5" action="/registerStudent" method="get">
         <button class="btn btn-primary">Add student</button>
     </form>
         <div class=" mt-5 w-100" style="margin-left: 0;">
@@ -58,8 +58,17 @@
                 <th>Roll no.</th>
                 <th>Name</th>
                 <th>Marks</th>
+                <th>dob</th>
                 <th>Actions</th>
-                
+                {{#each resultArray}}
+                <tr>
+                    <td>{{roll}}</td>
+                    <td>{{name}}</td>
+                    <td>{{marks}}</td>
+                    <td>{{dob}}</td>
+                    <td></td>
+                </tr>
+                {{/each}}
             </table>
         </div>
     </div>
