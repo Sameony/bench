@@ -28,6 +28,9 @@ app.get("/landingPage",(req,res)=>{
 app.get("/registerStudent",(req,res)=>{
     res.render("addStudent")
 })
+app.post("/editStudentDetails",(req,res)=>{
+    res.render("editStudent",{name:req.body.name, marks:req.body.marks, dob:req.body.dob, roll:req.body.roll})
+})
 
 app.get("/showAllStudent",(req,res)=>{
     res.render("showStudents")
