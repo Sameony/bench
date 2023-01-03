@@ -79,6 +79,8 @@ const updateResult = async (req, res, next) => {
         } = req.body;
         if (!roll)
             throw ("Insufficient arguments")
+        if(updatedMarks>100)
+            throw("invalid marks")
         let updationStatus = await student_model.findOneAndUpdate({
             roll: roll
         }, {

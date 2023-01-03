@@ -77,7 +77,17 @@
     </div>
   </div>
     </nav>
-    <div class="container mt-5">
+    <div class="container mt-5 pt-3">
+          {{#if success}}
+        <div class="alert alert-success" role="alert">
+            {{success}}
+            </div>
+        {{/if}}
+         {{#if error}}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        {{/if}}
         <div class="row row-cols-2 mt-5 g-5">
             <div class="col mt-5">
                 <form method="post" action="/auth/login">
@@ -93,9 +103,7 @@
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Submit</button>
-                {{#if error}}
-                    <h2>{{error}}</h2>
-                    {{/if}}
+               
                 </form>
             </div>
             <div class="col mt-5">

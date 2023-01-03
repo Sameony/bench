@@ -9,6 +9,7 @@ const fetchOneResult = async (req,res,next)=>{
         else
         {
             let status = await student_model.findOne({roll:rollno, dob:dob})
+            console.log(status)
             if(status)
                 res.render("viewResult", {name:status.name, marks:status.marks, roll:status.roll, dob:status.dob})
             else
@@ -16,7 +17,7 @@ const fetchOneResult = async (req,res,next)=>{
         }
     }catch(error)
     {
-        res.render("viewResult",{error:error})
+        res.render("landingPage",{error:error})
     }
 }
 
