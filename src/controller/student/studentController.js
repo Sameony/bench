@@ -10,13 +10,13 @@ const fetchOneResult = async (req,res,next)=>{
         {
             let status = await student_model.findOne({roll:rollno, dob:dob})
             if(status)
-                res.status(200).send({data:status, status:"success"})
+                res.render("viewResult", {name:status.name, marks:status.marks, roll:status.roll, dob:status.dob})
             else
                 throw("Something went wrong while performing fetching operation.")
         }
     }catch(error)
     {
-        res.status(400).send(error+"Something went wrong")
+        res.render("viewResult",{error:error})
     }
 }
 

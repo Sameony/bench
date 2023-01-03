@@ -99,17 +99,17 @@
                 </form>
             </div>
             <div class="col mt-5">
-                <form method="post" action="">
+                <form method="post" action="/student/fetchResultById">
                     <h1>Sign in as Student</h1>
                     <div class="mb-3 mt-4">
                         <label for="exampleInputEmail1" class="form-label">Roll Number</label>
-                        <input type="number" class="form-control" aria-describedby="emailHelp">
+                        <input type="number" name="rollno" class="form-control" aria-describedby="emailHelp">
                         <div id="emailHelp" class="form-text">Please check your own result only</div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Date of birth</label>
                         <div id="wrapper">
-                            <input class="dateInput" type="date">
+                            <input class="dateInput" type="date" name="dob">
                         </div>
                     </div>
                     
