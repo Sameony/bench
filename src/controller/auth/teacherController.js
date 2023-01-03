@@ -17,17 +17,18 @@ const authFunction =  async (req, res) =>{
 
 const verifyLogin= async (req, res) =>{
     try {
-        console.log(req)
         const password = req.body.password;
         const username = req.body.userEmail;
         console.log("u are at auth, and ur name is: "+username)
         let result = await teacher_model.find({name:username})
+        console.log(result)
         let verified = await cryptService.verify(password, result[0].password)
+        console.log(verified)
         if(!verified)
-         throw ("Wrong password")
+        throw ("Wrong password")
         else   
-            {
-                sessionStorage.setItem("username",username)
+        {
+                
                 res.render("showStudents",{uname:username})
             }
     }catch(error){

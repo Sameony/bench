@@ -93,6 +93,9 @@
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Submit</button>
+                {{#if error}}
+                    <h2>{{error}}</h2>
+                    {{/if}}
                 </form>
             </div>
             <div class="col mt-5">
