@@ -17,16 +17,21 @@ const authFunction =  async (req, res) =>{
 
 const verifyLogin= async (req, res) =>{
     try {
-        const {username, password} = req.body;
+        console.log(req)
+        const password = req.body.password;
+        const username = req.body.userEmail;
         console.log("u are at auth, and ur name is: "+username)
         let result = await teacher_model.find({name:username})
         let verified = await cryptService.verify(password, result[0].password)
         if(!verified)
          throw ("Wrong password")
         else   
-            res.status(200).send("Logged in successfully")
+            {
+                sessionStorage.setItem("username",username)
+                res.render("showStudents",{uname:username})
+            }
     }catch(error){
-        res.status(400).send(error);
+        res.render("landingPage", {error: error})
     }
 }
 
@@ -61,4 +66,37 @@ const updateResult = async(req,res,next) =>{
         throw("Something went wrong. Please try again after some time")
     }
 }
-module.exports = {authFunction, verifyLogin, updateResult, fetchAllResult};
+const removeResult = async (req,res,next)=>{
+    try{
+        const {rollno} = req.body;
+        if(!rollno)
+            throw("Insufficient arguments")
+        else
+        {
+            let status = await student_model.findOneAndRemove({roll:rollno})
+            if(status)
+                res.status(200).send("Successfully removed one entry")
+            else
+                throw("Something went wrong while performing this operation.")
+        }
+    }catch(error)
+    {
+        res.status(400).send(error+"Something went wrong")
+    }
+}
+const addStudent =  async (req, res) =>{
+    try {
+        const {name, roll, dob, marks} = req.body;
+        if(!roll || !name || !dob || !marks)
+        throw("Insufficient arguments")
+        const studentData = student_model.create({name:name, roll:roll, marks:marks, dob:dob})
+        if(studentData)
+            res.status(200).send("Succesfully inserted data")
+        else
+            throw("Something went wrong.")
+    }catch(error){
+        res.status(400).send(error);
+        }
+        
+    }
+module.exports = {authFunction, verifyLogin, updateResult, fetchAllResult, removeResult, addStudent};

@@ -1,24 +1,43 @@
-const crypt = require("../../config/bcrypt");
+
 const student_model = require("../../models/students")
 
-const authFunction =  async (req, res) =>{
-    try {
-    const {name, dob} = req.body;
-    console.log("u are at student auth, and ur name is: "+name)
-    let result = await student_model.find({name:name, dob:dob})
-    if(!result[0])
-        throw ("No Record Found")
-    else
+const fetchOneResult = async (req,res,next)=>{
+    try{
+        const {rollno, dob} = req.body;
+        if(!rollno || !dob)
+            throw("Insufficient arguments")
+        else
+        {
+            let status = await student_model.findOne({roll:rollno, dob:dob})
+            if(status)
+                res.status(200).send({data:status, status:"success"})
+            else
+                throw("Something went wrong while performing fetching operation.")
+        }
+    }catch(error)
     {
-        res.status(200).send({status:"success", data:result[0]})
+        res.status(400).send(error+"Something went wrong")
     }
-        
-    res.status(200).send("Succesfully inserted data")
-}catch(error){
-    res.status(400).send(error);
 }
-    
+
+const studentLogin = async (req,res,next)=>{
+    try{
+        const {rollno, dob} = req.body;
+        if(!rollno || !dob)
+            throw("Insufficient arguments")
+        else
+        {
+            let status = await student_model.findOne({roll:rollno, dob:dob})
+            if(status)
+                res.status(200).send({data:status, status:"success"})
+            else
+                throw("Something went wrong while performing fetching operation.")
+        }
+    }catch(err)
+    {
+        res.status(400).send(err+"Something went wrong")
+    }
 }
 
 
-module.exports = {authFunction};
+module.exports = {fetchOneResult};

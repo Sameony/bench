@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router();
-const {authFunction} = require("../controller/auth/teacherController")
+const {fetchOneResult} = require("../controller/student/studentController");
 
-// router.post("/login", authFunction);
+router.post("/fetchResultById", fetchOneResult);
 
 module.exports = router;
