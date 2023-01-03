@@ -5,18 +5,29 @@ const student_model = require("../../models/students")
 const authFunction = async (req, res) => {
     try {
         const {
-            name,
+            userEmail,
             password
         } = req.body;
-        console.log("u are at auth, and ur name is: " + name)
+        console.log("u are at auth, and ur name is: " + userEmail)
         let encoded_pass = await cryptService.cryptify(password)
         const teacherData = teacher_model.create({
-            name: name,
+            name: userEmail,
             password: encoded_pass
         })
-        res.status(200).send("Succesfully inserted data")
+        if(teacherData)
+        {
+            res.render("addTeacher", {
+                success: "Sucessfully registered new Teacher"
+            });
+        }
+        else
+        {
+            throw("something Went wrong")
+        }
     } catch (error) {
-        res.status(400).send(error);
+        res.render("addTeacher", {
+            error: error
+        });
     }
 
 }
@@ -130,6 +141,8 @@ const addStudent = async (req, res) => {
         } = req.body;
         if (!roll || !name || !dob || !marks)
             throw ("Insufficient arguments")
+        if(marks>100)
+            throw("Marks cannot be higher than 100")
         const studentData = student_model.create({
             name: name,
             roll: roll,

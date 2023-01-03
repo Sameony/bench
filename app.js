@@ -5,7 +5,7 @@ const port = process.env.port || 3001;
 const app = express();
 const path = require('path')
 // view engine setup
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -28,10 +28,15 @@ app.get("/landingPage",(req,res)=>{
 app.get("/registerStudent",(req,res)=>{
     res.render("addStudent")
 })
+app.get("/registerTeacher",(req,res)=>{
+    res.render("addTeacher")
+})
 app.post("/editStudentDetails",(req,res)=>{
     res.render("editStudent",{name:req.body.name, marks:req.body.marks, dob:req.body.dob, roll:req.body.roll})
 })
-
+app.get("/",(req,res)=>{
+    res.render("enter")
+})
 app.get("/showAllStudent",(req,res)=>{
     res.render("showStudents")
 })
